@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Salted-Fish</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Salted-Fish">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="Salted-Fish">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Salted-Fish">
+  
+    <link rel="alternate" href="/atom.xml" title="Salted-Fish" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Salted-Fish</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Don&#39;t be a salted fish!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-highschool_analysis" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/19/highschool_analysis/" class="article-date">
+  <time datetime="2018-08-19T05:15:16.000Z" itemprop="datePublished">2018-08-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/19/highschool_analysis/">高校新闻舆情分析系统</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本系统通过对<a href="https://www.baidu.com/" target="_blank" rel="noopener">百度</a>上爬取的各高校数据，从新闻类别以及感情倾向两方面进行分类，并且经过整理归纳，绘制出可视化的图表以供用户观察。点击~<a href="http://47.106.251.239:4000" target="_blank" rel="noopener">此处</a>~以浏览本系统。</p>
+<h2 id="1-Web运行结构"><a href="#1-Web运行结构" class="headerlink" title="1. Web运行结构"></a>1. Web运行结构</h2><p>整个Web系统的运行结构如下所示。<br><br><br><img src="/2018/08/19/highschool_analysis/yqsys.png" width="320px" height="220px" alt="Web运行结构"><br><br></p>
+<h2 id="2-模型构建流程"><a href="#2-模型构建流程" class="headerlink" title="2. 模型构建流程"></a>2. 模型构建流程</h2><p>本系统首先爬取百度(Data Source)上各高校的新闻信息(News Data)，通过分词工具<a href="https://github.com/fxsjy/jieba" target="_blank" rel="noopener">jieba</a>进行分词，然后通过<a href="http://sklearn.apachecn.org/cn/0.19.0/" target="_blank" rel="noopener">scikit-learn</a>库的工具，对词语(Words)进行计数得到计数向量(Count Vector)，并构建<a href="https://zh.wikipedia.org/wiki/Tf-idf" target="_blank" rel="noopener">Tf-idf</a>权重向量(Tf-idf Vector)，最后放入<a href="https://zh.wikipedia.org/wiki/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8" target="_blank" rel="noopener">朴素贝叶斯</a>(Naïve Bayes)分类器中训练模型(Models)。<br><br><br><img src="/2018/08/19/highschool_analysis/yqsys2.png" width="650px" height="650px" alt="模型构建流程"><br><br></p>
+<h2 id="3-问题及解决"><a href="#3-问题及解决" class="headerlink" title="3. 问题及解决"></a>3. 问题及解决</h2><h4 id="1-爬虫速度慢。"><a href="#1-爬虫速度慢。" class="headerlink" title="1. 爬虫速度慢。"></a>1. 爬虫速度慢。</h4><p>问题描述：最初版本的爬虫为串行运行模式，面对大量数据，效率很低。<br>解决方法：将爬虫改为多线程。由于爬虫爬取的具体新闻内容来自各个网站，所以将爬虫改为多线程不会被反爬虫程序检测到。</p>
+<h4 id="2-训练集太小。"><a href="#2-训练集太小。" class="headerlink" title="2. 训练集太小。"></a>2. 训练集太小。</h4><p>问题描述：最初的训练集由人工贴标签，数据仅1900+。<br>解决方法：增加自学习功能。设置一个阈值，对于未标记的数据，通过已知模型进行预测（模型输出的预测结果为3个概率值），当预测结果的概率大于阈值时，认为该预测是正确的，并保存结果，将其加入训练集。</p>
+<p><br></p>
+<h2 id="4-模型效果"><a href="#4-模型效果" class="headerlink" title="4. 模型效果"></a>4. 模型效果</h2><h4 id="1-情感分类"><a href="#1-情感分类" class="headerlink" title="1. 情感分类"></a>1. 情感分类</h4><p>情感分类分为正面情感、中性情感、负面情感三种。初始训练集为1783，其中三种情感的新闻数量分别为504，884，395；测试集为196，测试准确率为93.37%，其中三种情感的新闻数量分别为53，98，45，单独测试的准确率分别为97.78%，88.78%，98.11%。经过观察，发现大多数错误都是将“中心情感”的新闻误判为“正面情感”，其中也不乏一些既可以认为是正面情感，也可以是中心情感的新闻，比如<a href="http://money.163.com/16/0510/15/BMNCLND900253B0H.html" target="_blank" rel="noopener">这条新闻</a>。</p>
+<p>通过自学习，设置阈值为0.99，最终将数据库中的数据（总共62071条）标记了38576条。</p>
+<h4 id="2-新闻分类"><a href="#2-新闻分类" class="headerlink" title="2. 新闻分类"></a>2. 新闻分类</h4><p>新闻分类分为学习学术、社团活动、招生考试、社会新闻四种。由于一些新闻类别区分不明显，即使人工分类也存在歧义，所以最终效果并不是很好。</p>
+<p><br></p>
+<h2 id="5-浏览说明"><a href="#5-浏览说明" class="headerlink" title="5. 浏览说明"></a>5. 浏览说明</h2><h4 id="1-隐藏功能"><a href="#1-隐藏功能" class="headerlink" title="1. 隐藏功能"></a>1. 隐藏功能</h4><p>在“<a href="http://47.106.251.239:4000/report" target="_blank" rel="noopener">舆情报告</a>”页面，点击柱状图的柱形部分，可以显示所包含的新闻。</p>
+<h4 id="2-数据说明"><a href="#2-数据说明" class="headerlink" title="2. 数据说明"></a>2. 数据说明</h4><p>由于服务器性能限制，“<a href="http://47.106.251.239:4000/analyze" target="_blank" rel="noopener">在线分析</a>”中使用的模型为未使用自学习功能训练的模型，并且目前使用的数据库数据仅为上海各高校的新闻数据。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/19/highschool_analysis/" data-id="cjleuszle0000n395bgygdhqv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/19/highschool_analysis/">高校新闻舆情分析系统</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 salted-fish<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
